@@ -1,0 +1,4 @@
+ #Ignore compile java class files
+ *.class
+ #Ignore uploads folder
+ uploads/*
