@@ -55,6 +55,7 @@ public class UserController {
     public ResponseEntity<?> updateUser(@PathVariable int id,
                                         @RequestBody UserDTO userDTO){
 
+
         ResponseData data = new ResponseData();
         data.setSuccess(userServiceImp.updateUser(id,userDTO));
         data.setData("update user");
