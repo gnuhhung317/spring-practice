@@ -1,10 +1,25 @@
 # Spring boot tutorial
 
-Đây là kho lưu trữ quá trình học **Spring boot** của tôi, dựa trên [Tutorial](https://www.javatpoint.com/spring-boot-tutorial)
+Đây là kho lưu trữ quá trình học **Spring boot** của tôi, dựa trên [tutorial](https://www.javatpoint.com/spring-boot-tutorial) của Javapoint. Repository này sẽ được chỉnh sửa trong quá trình tôi tìm hiểu thêm
 
 ## Spring boot tutorial {spring-boot-tutorial}
 
 ### Spring boot tutorial
+
+Hướng dẫn Spring Boot cung cấp các khái niệm cơ bản của Spring Framework. Hướng dẫn này được cung cấp cho cả người mới và chuyên nghiệp
+
+Spring Boot là một mô đun của Spring, cung cấp đặc tính RAD (Rapid Application Development) cho Framework Spring
+
+Hướng dẫn này sẽ cung cấp các chủ đề như tính năng, dự án, dự án maven, starter project wizard, Spring Initializr, CLI (giao diện dòng lệnh), applications, chú thích, quản lí phụ thuộc, đặc tính, starters, Actuator,JPA,JDBC, vv...
+
+<details>
+    <summary>Spring boot là gì</summary>
+    Spring boot là một dự án dựa trên phần trên của Spring. Nó cung cấp một cách dễ dàng và nhanh chóng để thiết lập, cấu hình và chạy cả các ứng dụng đơn giản và web-based
+    Đây là một mô hình cung cấp tính năng phát triển ứng dụng nhanh để tạo một ứng dụng Spring độc lập với cấu hình tối thiểu
+    
+    
+</details>
+![haha](img/what-is-spring-boot.png)
 
 ### Spring boot version
 
