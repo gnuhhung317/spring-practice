@@ -150,11 +150,194 @@ Có **4** lớp trong SB:
 
 ### Spring Initialzr
 
-### Download & Install STS IDE</summary>
+**Spring Initializr** là một công cụ **web-based** cung cấp bới Pivotal Web Serivce. Với sự giúp đỡ của nó. Ta có thể dễ dàng tạo cấu trúc của dự án Spring Boot. Nó cung cấp các API có thể mở rộng để tạo các dự án JVM-based.
+
+Nó cũng cung cấp nhiều lựa chọn khác nahu cho dự án dưới dạng một mô hình siêu dữ liệu (metadata model). Mô hình siêu dữ liệu này cho phép ta cấu hình danh sách các phụ thuộc được hỗ trợ bởi JVM và các phiên bản nền tảng,... Nó phục vụ siêu dữ liệu dưới dạng nổi tiếng cung cấp hỗ trợ cần thiết cho bên thứ ba
+
+<details>
+<summary>Spring Initialzr Modules</summary>
+Có các module:
+
+-   **initializr-actuator:** cung cấp các thông tin và thống kê bổ sung cho việc tạo dự án. Nó là 1 optional module.
+-   **initialzr-bom:** BOM viết tắt của **Bill of Materials**. Trong SB, BOM là 1 loại đặc biệt của **POM**, cái sử dụng để quản lý các version của phụ thuộc. Nó cung cấp 1 nơi tập trung các định nghĩa và nâng cấp các version của nó. Nó cung cấp sự linh hoạt trong thêm các phụ thuộc mà ko cần lo về version. Ngoài thế giới phần mềm, nó là danh sách các phần, item, .... để tạo sản phẩm. Nó giải thích _what_, _how_ và _where_ để tìm kiếm tài nguyên cần thiết
+
+-   **initializr-docs:** Cung cấp tài liệu
+-   **initializr-generator:** Nó là thư viện tạo dự án cốt lõi
+-   **initializr-generator-test:** Cung cấp cơ sở hạ tầng kiểm thử cho việc tạo dự án
+-   **initializr-metadata:** Cung cấp cơ sở hạ tầng metadata cho các aspect khác nhau của dự án.
+-   **initializr-service-example:** Cung cấp các instance tùy chỉnh.
+-   **initializr-version-resolver:** Là một module tùy chọn để trích xuất số phiên bản từ POM.
+-   **initializr-web:** Nó cung cấp web enpoints cho clients bên thứ 3.
+</details>
+<details>
+<summary>Các giao diện hỗ trợ</summary>
+
+-   IDE STS, IntelliJ IDEA Ultimate, NetBeans, Eclipse
+-   Custom Web UI http://start.spring.io or https://start-scs.cfapps.io.
+-   Custom Web UI http://start.spring.io or https://start-scs.cfapps.io.
+![img/spring-initializer](img/spring-initializer1.png)
+</details>
+<details>
+<summary>Tạo 1 dự án</summary>
+Trước khi tạo 1 dự án, ta phải làm quen với giao diện, với các labels sau:
+
+*   **Project:** Định nghĩa kiểu project. Có thẻ tạo Maven hoặc Gradle Project.
+*   **Language:** Cung cấp lựa chọn giữa Java, Kotlin và Groovy.
+*   **Spring Boot:** Lựa chọn phiên bản
+*   **Project Metadata:** Bao gồm thông tin liên quan của dự án như Group, Artifact,vv.. **Group** biểu thị tên package, **Artifact** biểu thị tên ứng dụng
+*   **Dependecies:** là các artifact mà ta có thể thêm vào dự án
+
+> Có một phần tùy chọn khách nữa trong các trường sau:
+
+-   Tên: Giống như Artifact
+-   Miêu tả
+-   ...
+</details>
+Nhất Generate Button để packing dự ấn và tải về jar hoặc war file.
 
 ### Spring boot example
 
+Thực hiện các bước sau để tạo một Dự án SB đơn giản
+
+**Step 1:** Mở Spring initializr https://start.spring.io
+**Step 2:** Cung cấp **Group** và **Artifact**.
+**Step 3:** Chọn nút **Generate**
+
+![spring-boot-simple-application1](img/spring-boot-simple-application1.png)
+
+Sau đó ta chọn nút Generate, bắt đầu đóng gói dự án vào tệp .rar và tải xuống.
+
+**Step 4:** Giải nén RAR file
+**Step 5:** Import thư mục
+File -> Import -> Existing Maven Project -> Next -> Browse -> Select the project -> Finish
+
+Nó sẽ mất một thời gian để import project. Khi import xong, ta sẽ thấy được thư mục dự án ở **Package Explorer**.
+
+![spring-boot-simple-application2](img/spring-boot-simple-application2.png)
+
+**SpringBootExampleApplication.java**
+
+```{java} package com.javatpoint.springbootexample;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+@SpringBootApplication
+public class SpringBootExampleApplication
+{
+public static void main(String[] args)
+{
+SpringApplication.run(SpringBootExampleApplication.class, args);
+}
+}
+```
+
+**pom.xml**
+
+```{xml}
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi=http://www.w3.org/2001/XMLSchema-instance xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<modelVersion>4.0.0</modelVersion>
+<parent>
+<groupId>org.springframework.boot</groupId>
+<artifactId>spring-boot-starter-parent</artifactId>
+<version>2.2.2.BUILD-SNAPSHOT</version>
+<relativePath/> <!-- lookup parent from repository -->
+</parent>
+<groupId>com.javatpoint</groupId>
+<artifactId>spring-boot-example</artifactId>
+<version>0.0.1-SNAPSHOT</version>
+<name>spring-boot-example</name>
+<description>Demo project for Spring Boot</description>
+<properties>
+<java.version>1.8</java.version>
+</properties>
+<dependencies>
+<dependency>
+<groupId>org.springframework.boot</groupId>
+<artifactId>spring-boot-starter</artifactId>
+</dependency>
+<dependency>
+<groupId>org.springframework.boot</groupId>
+<artifactId>spring-boot-starter-test</artifactId>
+<scope>test</scope>
+<exclusions>
+<exclusion>
+<groupId>org.junit.vintage</groupId>
+<artifactId>junit-vintage-engine</artifactId>
+</exclusion>
+</exclusions>
+</dependency>
+</dependencies>
+<build>
+<plugins>
+<plugin>
+<groupId>org.springframework.boot</groupId>
+<artifactId>spring-boot-maven-plugin</artifactId>
+</plugin>
+</plugins>
+</build>
+<repositories>
+<repository>
+<id>spring-milestones</id>
+<name>Spring Milestones</name>
+<url>https://repo.spring.io/milestone</url>
+</repository>
+<repository>
+<id>spring-snapshots</id>
+<name>Spring Snapshots</name>
+<url>https://repo.spring.io/snapshot</url>
+<snapshots>
+<enabled>true</enabled>
+</snapshots>
+</repository>
+</repositories>
+<pluginRepositories>
+<pluginRepository>
+<id>spring-milestones</id>
+<name>Spring Milestones</name>
+<url>https://repo.spring.io/milestone</url>
+</pluginRepository>
+<pluginRepository>
+<id>spring-snapshots</id>
+<name>Spring Snapshots</name>
+<url>https://repo.spring.io/snapshot</url>
+<snapshots>
+<enabled>true</enabled>
+</snapshots>
+</pluginRepository>
+</pluginRepositories>
+</project>
+```
+
+**Step 6:** Run the **SpringBootExampleApplication.java** file.
+chuột phải vào file -> Run As -> Java Applications
+![spring-boot-simple-application](img/spring-boot-simple-application3.png)
+Khi chạy thành công ta sẽ được
+![spring-boot-simple-application](img/spring-boot-simple-application4.png)
+
 ### Spring boot CLI
+
+Đây là một công cụ mà bạn có thể tải về từ trang chính thức của Spring Framework. Đây là ví dụ cụ thể:
+
+-   Tải CLI tool từ trang chính thức
+    ![download-tool](img/spring-boot-cli1.png)
+-   Giải nén file zip. Nó bao gồm thư mục bin, nơi mà các cài đặt của spring được lưu. Ta có thể dùng nó để thực thi ứng dụng SB
+    ![bin-folder](img/spring-boot-cli2.png)
+-   CLI có thể thực thi groovy. Đầu tiên ta cần tạo Groovy file cho ứng dụng SB
+-   Mở terminal và cd đến vị trí thư mục bin của CLI folder
+    ![bin-folder](img/spring-boot-cli3.png)
+
+*   Tạo một groovy file:
+    ![bin-folder](img/spring-boot-cli4.png)
+
+-   Tạo một controller trong groovy file:
+    ![bin-folder](img/spring-boot-cli5.png)
+
+-   thực thi file này bằng:
+    > /spring run SpringBootCliExample.groovy
+
+*   Kết quả:
+    ![run SA](img/spring-boot-cli7.png)
+    ![run SA](img/spring-boot-cli8.png)
 
 ### SB Example-STS
 
