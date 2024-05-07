@@ -339,11 +339,151 @@ Khi chạy thành công ta sẽ được
     ![run SA](img/spring-boot-cli7.png)
     ![run SA](img/spring-boot-cli8.png)
 
-### SB Example-STS
-
 ## Project Components
 
 ### SB Annotations
+
+Spring Boot Annotation là một kiểu siêu dữ liệu cung cấp dữ liệu cho chương trình. Nói cách khác, nó cung cấp thông tin **bổ sung** cho chương trình. Nó không phải là một phần của ứng dụng mà chúng ta phát triển. Nó không có ảnh hưởng trực tiếp đến sự vận hành của đoạn code ta chú thích. Nó cũng không thay đổi việc biên dịch chương trình.
+
+<details>
+<summary><b>Các annotation chính của Spring</b> </summary>
+
+**@Require:** được dùng cho phương thức Setter của Bean. Nó chỉ ra các Bean được đánh dấu phải được điền vào lúc cấu hình với thuộc tính bắt buộc nếu không sẽ ném ra ngoại lệ **BeanInitializationExcetption**.
+**Ví dụ:**
+
+```java
+@Component
+public class Customer
+{
+private Person person;
+@Autowired
+public Customer(Person person)
+{
+this.person=person;
+}
+}
+```
+
+**@Autowired:** Nó dùng để tự động kết nối Spring Bean ở phương thức Setter, biến đối tượng và constructor. Khi dùng @Autowire, Spring container sẽ tự động nối Bean theo kiểu dữ liệu
+**Ví dụ:**
+
+```java
+@Component
+public class Customer
+{
+private Person person;
+@Autowired
+public Customer(Person person)
+{
+this.person=person;
+}
+}
+```
+
+**Configuration:**: Là một chú thích cấp lớp.Các lớp chú thích bằng @Configuration sẽ được Spring Container sử dụng làm nguồn định nghĩa Bean
+
+**Ví dụ**
+
+```java
+@Configuration
+public class Vehicle
+{
+@BeanVehicle engine()
+{
+return new Vehicle();
+}
+}
+```
+
+**@Component:** sử dụng khi cần quét 1 packages tìm Bean. Nó sử dụng với @Configuration. Ta có thể chỉ định các gói cơ sở để quét các Spring Component.
+**Ví dụ**
+
+```java
+@ComponentScan(basePackages = "com.javatpoint")
+@Configuration
+public class ScanComponent
+{
+// ...
+}
+```
+
+**@Bean:** Là một chú thích mức phương thức. Nó thay thế cho Bean tag trong XML. Nó bảo phương thức sản xuất ra 1 bean được quản lý bởi Spring Container
+
+**Example**
+
+```java
+@Bean
+public BeanExample beanExample()
+{
+return new BeanExample ();
+}
+```
+
+</details>
+
+<details>
+<summary>Chú thích Stereotype (khuôn mẫu) Spring Framework</summary>
+
+**Component:** là chú thích cấp class. Nó dùng để đánh dấu 1 class như 1 bean. Class bị đánh dấu sẽ được tìm thấy trong đương dẫn lớp (classpath). Spring container sẽ chọn và cấu hình nó trong application context như 1 Spring Bean
+**Controller:** Là chú thích cấp class. Là trường hợp đặc biệt của **@Compoent**. Nó đánh dấu một lớp là trình xử lý yêu cầu web. Nó thường dùng để phục vụ các trang web. Mặc định , nó trả về chuỗi cho biết route sẽ chuyển hướng. Thường được dùng với @RequestMapping
+
+```java
+@Controller
+@RequestMapping("books")
+public class BooksController
+{
+@RequestMapping(value = "/{name}", method = RequestMethod.GET)
+public Employee getBooksByName()
+{
+return booksTemplate;
+}
+}
+```
+
+**Service:** được dùng ở cấp class. Nó nói rănfg lớp này chứa các bussiness logic
+**Repository:** Nó là một chú thích cấp class. Repository là một DAOs (Data Access Object) mà có thể truy cập trực tiếp . Nó thực hiện tất cả hoạt động liên quan đến DB.
+
+</details>
+
+<details>
+<summary><b>Chú thích Spring Boot</b></summary>
+
+-   **@EnableAutoConfiguration:** Nó tự động cấu hình Bean đang có trong classpath và cấu hình nó để chạy các phương thức. Việc sử dụng chú thích này bị giảm sau Spring Boot 1.2.0 vì nhà phát triển đã cung cấp giải pháp thay thế **SpringBootApplication**
+-   **@SpringBootApplication:** sự kết hợp của **@EnableAutoConfiguration**, **@ComponentScan**, và **@Configuration**
+</details>
+<details>
+<summary><b>Spring MVC and REST Annotations</b></summary>
+
+**RequestMapping:** Sử dụng để ánh xạ các yêu cầu của trang web. Nó có nhiều phần tử lựa chọn như **onsumes, header, method, name, params, path, produces**, và **value**. Ta có thể dùng với class cũng như method
+**Ví dụ:**
+
+```java
+    @Controller
+public class BooksController
+{
+@RequestMapping("/computer-science/books")
+public String getAllBooks(Model model)
+{
+//application code
+return "bookList";
+}
+}
+```
+
+-   **@GetMapping:** Ánh xạ yêu cầu HTTP GET ở một phương thức xử lý xác định. Nó được sử dụng để tạo một điểm cuối (endpoint) để **fetches**(tìm nạp). Được sử dụng thay **@RequestMapping(method = RequestMethod.GET)**
+-   **@PostMapping:** Ánh xạ yêu cầu HTTP Post ở một phương thức xử lý xác định. Nó được sử dụng để tạo một điểm cuối (endpoint) để **create**(tạo). Được sử dụng thay **@RequestMapping(method = RequestMethod.POST)**
+-   **@PutMapping:** Ánh xạ yêu cầu HTTP PUT ở một phương thức xử lý xác định. Nó được sử dụng để tạo một điểm cuối (endpoint) để **create hoặc update**(tạo hoặc thêm). Được sử dụng thay **@RequestMapping(method = RequestMethod.GET)**
+-   **@DeleteMapping:** Ánh xạ yêu cầu HTTP Delete ở một phương thức xử lý xác định. Nó được sử dụng để tạo một điểm cuối (endpoint) để **delete a resource**(xóa một tài nguyên). Được sử dụng thay **@RequestMapping(method = RequestMethod.GET)**
+-   **@PatchMapping:** Ánh xạ yêu cầu HTTP Ơatch ở một phương thức xử lý xác định. Được sử dụng thay **@RequestMapping(method = RequestMethod.PATCH)**
+-   **@RequestBody:** sử dụng để **liên kết (bind)** các yêu cầu HTTP với 1 object như 1 tham số phương thức. Bên trong nó sử dụng HTTP MessageConverters để convert phần thân của request. Khi chúng ta đánh dấu một tham số với @RequestBody, Spring sẽ liên kết nội dung đến của HTTP request với tham số đó
+-   **@ResponseBody:** Sử dụng để liên kết các giá trị trả về. Nó yêu cầu Spring Boot serialize kết quả trả về sang dạng JSON và XML
+-   **@PathVariable:** Nó dùng để lấy giá trị từ ỦI.Nó phù hợp với đat số RESTfull web service, nơi mà URL bao gồm cả biến đường dẫn.
+-   **@RequestParam:** Sử dụng để truy vấn các tham số từ URL, còn được gọi là **query parameter**. Nó phù hợp nhất với các ứng dụng web. Nó có thể chỉ định giá trị mặc định nếu tham số không tồn tại trong URL.
+
+-   **@RequestHeader:** Sử dụng để lấy thông tin chi tiết từ yêu cầu HTTP request. Chúng ta sử dụng chú thích này như một tham số trong phương thức. Các giá trị tùy chọn của tham số này là **name, required, value, defaultValue.** Với mỗi chi tiết trên header, ta nên chỉ định chú thích riêng. Ta cũng có thể dùng nhiều lần trong 1 method
+-   **@RestController:** Nó có thể coi là sự kết hợp giữa **@Controller và @ResponseBody**. Tự nó đánh dấu với @ResponseBody, loại bỏ nhu cầu đánh dấu từng dnonfg
+-   **@RequestAttribute:** Nó liên kết tham số phương thức với thuộc tính yêu cầu. Nó cung cấp cách truy cập thuận tiện tới các thuộc tính yêu cầu từ phương thức controller. Vowis @RequestAttribute, ta có thể truy cập vào objects nếu nó được điền trong serversize.
+</details>
 
 ### SB Dependency Management
 
