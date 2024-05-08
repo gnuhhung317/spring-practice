@@ -422,7 +422,7 @@ return new BeanExample ();
 </details>
 
 <details>
-<summary>Chú thích Stereotype (khuôn mẫu) Spring Framework</summary>
+<summary><b>Chú thích Stereotype (khuôn mẫu) Spring Framework</b></summary>
 
 **Component:** là chú thích cấp class. Nó dùng để đánh dấu 1 class như 1 bean. Class bị đánh dấu sẽ được tìm thấy trong đương dẫn lớp (classpath). Spring container sẽ chọn và cấu hình nó trong application context như 1 Spring Bean
 **Controller:** Là chú thích cấp class. Là trường hợp đặc biệt của **@Compoent**. Nó đánh dấu một lớp là trình xử lý yêu cầu web. Nó thường dùng để phục vụ các trang web. Mặc định , nó trả về chuỗi cho biết route sẽ chuyển hướng. Thường được dùng với @RequestMapping
@@ -486,6 +486,25 @@ return "bookList";
 </details>
 
 ### SB Dependency Management
+
+SB quản lý các phụ thuộc và cấu hình một cách tự động. Mỗi bản phát hành cung cấp một danh sách các phụ thuộc mà nó hỗ trợ. Danh sách phụ thuộc khả dụng là một phần của BOM (Bills of Materials) có thể sử dụng với **Maven**.
+
+#### Lợi ích của quản lý phụ thuộc
+
+-   Cung cấp sự tập trung thông tin của phụ thuộc bằng việc chỉ định phiên bản SB tại 1 nơi. Nó giúp chuyển đổi phiên bản dễ dàng hơn.
+-   Tránh sự không khớp giữa các phiên bản khác nhau của các thư viện SB
+-   Chỉ cần sửa thư viện với version chỉ định. Hữu ích trong dự án multi-module
+    > SB có thể ghi đè các phiên bản phụ thuộc nêu cần thiết
+
+#### Hệ thống quản lý phụ thuộc Maven
+
+Dự án Maven kế thừa các đặc tính của **spring-boot-starter-parent**:
+
+-   Mặc định phiên bản Java Compiler
+-   Mã hóa mã nguồn bằng **UTF-8**
+-   Kế thừa một **phần phục thuộc (Dependency Section)** từ spring-boot-dependency-pom. Nó quản lý version của các phụ thuộc chung. Nó sẽ bỏ qua thẻ version ở các phụ thuộc này
+-   Sensible **resource filtering** (lọc tài nguyên hợp lý)
+-   Sensible **plugin configuration** (cấu hình plugin hợp lý)
 
 ### SB Application Properties
 
