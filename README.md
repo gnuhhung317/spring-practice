@@ -494,7 +494,7 @@ SB quản lý các phụ thuộc và cấu hình một cách tự động. Mỗi
 -   Cung cấp sự tập trung thông tin của phụ thuộc bằng việc chỉ định phiên bản SB tại 1 nơi. Nó giúp chuyển đổi phiên bản dễ dàng hơn.
 -   Tránh sự không khớp giữa các phiên bản khác nhau của các thư viện SB
 -   Chỉ cần sửa thư viện với version chỉ định. Hữu ích trong dự án multi-module
-    > SB có thể ghi đè các phiên bản phụ thuộc nêu cần thiết
+    > **NOTE:** SB có thể ghi đè các phiên bản phụ thuộc nêu cần thiết
 
 #### Hệ thống quản lý phụ thuộc Maven
 
@@ -507,6 +507,105 @@ Dự án Maven kế thừa các đặc tính của **spring-boot-starter-parent*
 -   Sensible **plugin configuration** (cấu hình plugin hợp lý)
 
 ### SB Application Properties
+
+SB đi kèm với cơ chế cấu hình application sử dụng một file tên **application.properties**. Nó nằm trong thư mục **src/main/resources**
+
+![application-properties1](img/spring-boot-application-properties1.png)
+
+Spring Boot cung cấp nhiều thuộc tính khác nhau có thể cấu hình trong file **application.properties**. Các thuộc tính này có giá trị mặc định, ta có thể thay đổi nó hoặc tự định nghĩa thuộc tính nếu cần thiết
+Nó cũng giúp ta có thể chạy ứng dụng trên các môi trường khác nhau. Tóm lại nó là để
+
+-   Cấu hình SB
+-   định nghĩa các thuộc tính tùy chỉnh của ứng dụng
+    Ví dụ
+
+```
+#configuring application name
+spring.application.name = demoApplication
+#configuring port
+server.port = 8081
+```
+
+#### YAML Properties File
+
+SB cung cấp một file khác để cấu hình được gọi là **yml**. File Yaml hoạt động bởi vì có **Snake YAML** jar nằm trong classpath. Thay vì sử dụng **application.properties**, ta có thể dùng application.yml, nhưng YML file cần nằm trong class path
+
+**Ví dụ**
+
+```
+spring:
+    application:
+        name: demoApplication
+server:
+    port: 8081
+```
+
+#### Các loại thuộc tính SB
+
+Có 16 loại là :
+
+1. Core Properties
+1. Cache Properties
+1. Mail Properties
+1. JSON Properties
+1. Data Properties
+1. Transaction Properties
+1. Data Migration Properties
+1. Integration Properties
+1. Web Properties
+1. Templating Properties
+1. Server Properties
+1. Security Properties
+1. RSocket Properties
+1. Actuator Properties
+1. DevTools Properties
+1. Testing Properties
+ <details>
+ <summary><b>Bảng thuộc tính phổ biến</b></summary>
+
+| Property                                              |    Default Values     | Description                                                                                                             |
+| :---------------------------------------------------- | :-------------------: | ----------------------------------------------------------------------------------------------------------------------- | 
+| Debug                                                 |         False         | Bật log debug                                                                                                           |
+| spring.application.name                               |                       | Đặt tên ứng dụng                                                                                                        |
+| spring.applicatoin.admin.enable                       |         false         | Bật tính năng admin của ứng dụng                                                                                        |
+| spring.config.name                                    |      application      | đặt tên cho file config                                                                                                 |
+| spring.config.location                                |                       | Sử dụng để chỉ định vị trí file config                                                                                  |
+| server.port                                           |         8080          | cấu hình cổng HTTP server                                                                                               |
+| server.servlet.context-path                           |                       | Nó cấu hình context path của ứng dụng                                                                                   |
+| logging.file.path                                     |                       | Dùng để cấu hình vị trí của file log                                                                                    |
+| spring.banner.charset                                 |         UTF-8         | Mã hóa tập tin biểu ngữ (banner file)                                                                                   |
+| spring.banner.location                                | classpath:banner.txt  | sử dụng để cài đặt vị trí file banner                                                                                   |
+| logging.file                                          |                       | Cài đặt tên cho file log                                                                                                |
+| spring.application.index (đã ngừng dùng sau spring 3) |                       | cài đặt chỉ mục ứng dụng                                                                                                |
+| spring.mail.host                                      |                       | dùng dể thiết lập máy chủ SMTP (Simple mail transfer protocol)                                                          |
+| spring mail.password                                  |                       | sử dụng để thiết lập mật khẩu của SMTP server                                                                           |
+| spring.mail.port                                      |                       | thiết lập cổng SMTP server                                                                                              |
+| spring.mail.sources                                   |                       | sử dụng để thiết lập nguồn (sources) cho chương trình                                                                   |
+| server.address                                        |                       | thiết lập địa chỉ mạng mà máy chủ sẽ liên kết                                                                           |
+| server.connection-timeout                             |                       | sử dụng để cài thời gian ở tính bằng milliseconds mà trình kết nối sẽ đợi một yêu cầu HTTP khách trước khi đóng kết nối |
+| server.context-path                                   |                       | thiết lập context path của ứng dụng                                                                                     |
+| server.server-header                                  |                       | dùng cho Server reponse header ( header không gửi đi nếu rỗng trường này rỗng)                                          |
+| server.servlet-path                                   |           /           | thiết lập đường dẫn cho dispatcher servlet chính                                                                        |
+| server.ssl.enable                                     |                       | sử dụng để bật hỗ trợ SSL                                                                                               |
+| spring.http.multipart.enable                          |         True          | bật hỗ trợ uploads multi-part                                                                                           |
+| spring.servlet.multipart.max-file-size                |          1MB          | sử dụng để cấu hình kích cỡ file lớn nhất                                                                               |
+| spring.mvc.async.request-timeout                      |                       | thiết lập thời gian theo milliseconds                                                                                   |
+| spring.mvc.date-format                                |                       | thiết lập format thời gian dd/MM/yyyy                                                                                   |
+| spring.mvc.locale                                     |                       | Sử dụng để thiết lập locale cho ứng dụng                                                                                |
+| spring.social.facebook.app-id                         |                       | thiết lập FB App ID của ứng dụng                                                                                        |
+| spring.social.linkedin.app-id                         |                       | thiết lập linkedin App ID của ứng dụng                                                                                  |
+| spring.social.twitter.app-id                          |                       | thiết lập twitter App ID của ứng dụng                                                                                   |
+| security.basic.authorize-mode                         |         role          | thiết lập chế độ ủy quyền để ứng dụng                                                                                   |
+| security.basic.enabled                                |         True          |                                                                                                                         | bật xác thực basic |
+| spring.test.database.replace                          |          any          | loại DataSource hiện có để thay thế                                                                                     |
+| spring.test.mockmvc.print                             |       mặc định        | Tùy chọn MVC Print                                                                                                      |
+| spring.freemaker.content-type                         |       text/html       | Giá trị Content Type                                                                                                    |
+| spring.security.filter.dispatcher-type                | async, error, request | loại Security filter chain dispatcher                                                                                   |
+| spring.security.filter.order                          |         -100          | Security filter chain order                                                                                             |
+| spring.security.oauth2.client.registration.\*         |                       | OAuth client registrations                                                                                              |
+| spring.security.oauth2.client.provider.\*             |                       | OAuth provider details                                                                                                  |
+
+ </details>
 
 ### SB Starter
 
