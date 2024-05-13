@@ -651,7 +651,48 @@ Có 16 loại là :
 
 ### Spring boot JPA
 
-### SPring boot JDBC
+#### JPA là gì
+**Spring Boot JPA** là một đặc tả (specification) for managing các dữ liệu **quan hệ** (**relational** data) trong ứng dụng Java. Nó cho phép ta truy cập và lưu trữ (persist) dữ liệu giữa các đối tượng/lớp và các CSDL quan hệ. JPA tuân theo **Object-Relation Mapping**  (ORM). Nó sự dụng một tập hợp các giao diện. Nó cung cấp một runtime **Entity Manager** API cho xử lý truy vấn và giao dịch trên các đối tượng đối với CSDL. Nó sử dụng ngôn ngữ truy vấn hướng đối tượng độc lập nền tảng JPQL (Java Persistent Query Language)
+
+trong bối cảnh lưu trữ (context of persistence), nó bao gồm 3 lĩnh vực.
+* Java Persistence API
+* **Object-Relational** metadata
+* Chính API, định nghĩa trong package **persistence**
+
+> **NOTE:** JPA không phải 1 framework. Nó định nghĩa các khái niệm có thể triển khai bởi mọi framework
+
+#### Tại sao ta nên sử dụng JPA
+
+JPA dễ dàng, gọn gàng, ít tốn công sức hơn JDBC,SQL và ánh xạ thủ công. JPA phù hợp cho các ứng dụng phức tạp **không hướng hiệu suất** . Lợi ích chính của JPA hơn JDBC là ở JPA, dữ liệu được biểu diện đướ dạng đối tượng và lớp trong khi dữ liệu JDBC biểu diễn dưới dạng bảng và bản ghi. Nó sử dụng POJO để biểu diễn dữ liệu lưu trữ làm đơn giản hóa lập trình database. Đây là vài lợi ích của JPA:
+* Tránh viế DDL trong phương ngữ (dialect) SQL dành riêng cho CSDL. Thay vào đó, nó cho phép ánh xạ trong XML hoặc sử dụng Java annotations
+* JPA cho phép ta tránh viết DML trong phương ngữ dành riêng cho CSDL.
+* Cho phép lưu trữ và lấy các Java object và đồ thị mà công cần bất kỳ ngôn ngữ DML nào.
+* Khi cần truy vấn JPQL, nó cho phép ta thể hiện truy vấn dưới dạng Java entities thay vì bảng và cột SQL
+#### Đặc điểm JPA
+Các đặc tính của JPA:
+* là repository mạnh mẽ và **object-mapping abstraction** có thể tùy chỉnh.
+* Hỗ trợ **cross-store persistence**. Có nghĩa là một thực thể có thể lưu trữ 1 phần trong MySQL và Neo4j (Graph Database  Management System)
+* Tự động tạo truy vấn từ tên phương thức truy vấn
+* Các lớp cơ sở miền (domain base class) cung cấp thuộc tính cơ bản.
+* Hỗ trợ **transparent auditing** *?*
+* Có khả năng tích hợp repository code tùy chỉnh
+* Dễ dàng tích hợp với Spring FrameWork với namespace tùy chỉnh.
+
+#### Kiến trúc JPA
+
+JPA là một nguồn để lưu trữ các bussiness entity như một relation entity. Nó cho biết cách định nghĩa một POJO như một thực thể và làm sao để quản lý các thực thể với quan hệ
+Dưới đây là một mô tả về kiến trúc mức class của JPA diễn tả các lớp và interface chính của JPA định nghĩa rong **javax persistence** package. Kiến trúc này bao gồm các thành phần sau:
+* **Persistence:** Một lớp bao gồm các phương thức tĩnh để lấy một EntityManagerFactory instance
+* **EntityManagerFactory**: là một factory class của EntityManager. Nó tạo và quản lý nhiều thể hiện của EntityManager.
+* **EntityManager:** Nó là một giao diện, điều khiển các hoạt động lưu trữ trên đối tượng tượng. Nó hoạt động cho các Query instance
+* **Entity:** Thực thể là các đối tượng lưu trữ được lưu như các bản ghi trong DB
+* **Persistence Unit:** Định nghĩa một tập hợp của tất cả các lớp tực thể. Trong ứng dụng, EntityManager instances quản lý nó. Tập hợp của các lớp thực thể biểu diễn dữ liệu được nằm trong một kho dữ liệu duy nhất.
+* **EntityTransaction:** Có một mối quan hệ **one-to-one** với EntityManager. Mỗi EntityManager,các hoạt động được duy trì bởi Entity Transaction.
+* **Query:** Nó là một interface được thể hiện bởi mỗi JPA vendor (nhà cung cấp JPA) để đạt được các đối tượng quan hệ đáp ứng tiêu chí (meet the citeria)
+
+![spring-boot-jpa1](img/spring-boot-jpa1.png)
+
+### Spring boot JDBC
 
 ### SB JDBC Example
 
