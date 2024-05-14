@@ -692,6 +692,30 @@ Dưới đây là một mô tả về kiến trúc mức class của JPA diễn 
 
 ![spring-boot-jpa1](img/spring-boot-jpa1.png)
 
+#### JPA Class Relationships
+
+Các lớp và giao diện trình bày ở trên có mối quan hệ với nhau. Các mối quan hệ biểu diễn như sau: 
+![Spring-boot-jpa2](img/spring-boot-jpa2.png)\
+
+* Mối quan hệ giữa EntityManager và EntityTransaction là **one-to-one**. Có một thể hiện EntityTransaction cho mỗi hoạt động (operation) của EntityManager.
+* Mối quan hệ giữa EntityManageFactory và EntityManager là một quan hệ **one-to-many**. Nó là một factory class cho thể hiện EntityManager
+* Mối quan hệ giữa EntityManager và Query là **one-to-many**. Chúng ta có thể thực thi tất cả query chỉ với một thể hiện của lớp EntityManger.
+* Mối quan hệ giữa EntityManager và Enity là **one-to-many**. Một thể EntityManager có thể quản lý nhiều Entity.
+
+#### JPA Implemetations
+
+JPA là một API mã nguồn mở. Có nhiều nhà cung cấp doanh nghiệp (enterprises vendor) như Eclipse, RedHat, Oracle,.. cung cấp sản phẩm mới bằng việc thêm JPA vào chúng. Có vài frameworks triển khai JPA như **Hibernate, EclipseLink, DataNucleus**,... Nó còn biết đến các công cụ **Object-Relation Mapping** (ORM).
+#### Object-Relation Mapping (ORM)
+Trong ORM, ánh xạ các Java objects tới bảng database, và ngược lại được gọi là **Object-Relation Mapping**. Việc ánh xạ ORM hoạt động như một cây cầu giữa một **CSDL quan hệ** (bảng và bản ghi) và **Java application** (các lớp và đối tượng)
+
+Trong hình dưới đây, lớp ORM là một tầng chuyển đổi (adapter layer). Nó chuyển đổi ngôn ngữ của đối tượng sang ngôn ngữ SQL và bảng quan hệ
+![spring-boot-jpa3](img/spring-boot-jpa3.png)
+
+Tầng ORM xuất hiện giữa ứng dụng và cơ sở dữ liệu. Nó chuyển đổi các lớp và đối tượng Java để chúng có thể được lưu trữ và quản lý trong CSDL quan hệ. Mặc định, tên được lưu trữ trở thành tên của bảng, và các trường trở thành các cột. Khi một ứng dụng được thiết lập, mỗi hàng của bảng tương ứng với một object
+
+#### JPA Versions
+
+> Updating...
 ### Spring boot JDBC
 
 ### SB JDBC Example
