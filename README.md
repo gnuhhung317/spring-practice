@@ -716,7 +716,138 @@ Tầng ORM xuất hiện giữa ứng dụng và cơ sở dữ liệu. Nó chuy�
 #### JPA Versions
 
 > Updating...
+
+#### So sánh JPA và Hibernate
+
+JPA: là một đặc tả Java (Java specification) dùng để truy cập , quản lý và lưu trữ data giữa đối tượng Java và CSDL quan hệ. Nó là cách tiếp cận tiêu chuẩn cho ORM.
+Hibernate: Là một tool mã nguồn mở, nhẹ, dùng để lưu đối tượng Java trong cơ sở dữ liệu quan hệ. Nó là một nhà cung cấp JPA. Nó tuân theo cách tiếp cận chung được cung cấp bởi JPA
+Bảng sau sẽ so sánh sự khác nhau:
+
+| JPA | Hibernate|
+| :---|:---------|
+|Là một **Java Specification** cho việc ánh xạ dữ liệu trong ứng dụng Java | Là một **ORM framework** liên quan đến lưu trữ dữ liệu lâu dài (data persistence)|
+|Jpa không cung cấp các lớp triển khai | cung cấp các lớp thực thi |
+| Sử dụng ngôn ngữ truy vấn độc lập nền tảng gọi là **JPQL** (Java Persistence Query Language) | Sử dụng ngôn ngữ truy vấn riêng được gọi là **HQL** (Hibernate Query Language). |
+| Được định nghĩa trong **javax.persistence** package| Được định nghĩa trong **org.hibernate** package|
+| Được triển khai bởi nhiều ORM tools như **Hibernate, EclipseLink**,etc | Hibernate là **nhà cung cấp** JPA|
+|JPA sử dụng **EntityManager** để xử lý việc lưu trữ dữ liệu lâu dài | Hibernate sử dụng **Session** để xử lý việc lưu trữ dữ liệu lâu dài |
+
+#### Spring Boot Starter Data JPA 
+SB cung cấp dependency **spring-boot-stater-data-jpa** để kết nối SB application với relational database một cách hiệu quả. 
+
+```xml
+<dependency>    
+<groupId>org.springframework.boot</groupId>    
+<artifactId>spring-boot-starter-data-jpa</artifactId>    
+<version>2.2.2.RELEASE</version>    
+</dependency>  
+```
+
+#### Ví dụ SB JPA
+
+Trong ví dụ này ta sẽ sử dụng in-memory database **Apache Derby**
+
+**Apache Derby:** là một CSDL quan hệ mã nguồn mở, nhúng được triển khai hoàn toàn bằng Java. Nó có sẵn theo giấy phép Apache License 2.0. Các lợi ích chính của Apacher Derby là:
+* Dễ cài đặt, triển khai và sử dụng
+* Dựa trên tiêu chuẩn Java, JDBC và SQL
+* Cung cấp một JDBC driver nhúm cho phép nhúng Derby trong bất kỳ giải pháp Java-base nào.
+SB có thể tự động cấu hình CSDL nhúng như **H2, HSQL,** và **Derbydatabases**. Ta chỉ cần thêm dependency của chúng. Với Derby:
+
+```xml
+<dependency>  
+<groupId>org.apache.derby</groupId>  
+<artifactId>derby</artifactId>  
+<scope>runtime</scope>  
+</dependency>  
+```
 ### Spring boot JDBC
+**Spring Boot JDBC** cung cấp starter và thư viện cho việc kết nối với bằng JDBC
+
+Trong SB JDBC, các bean liên quan đến CSDL như **DataSource, JdbcTemplate** và **NamedParameterJdbcTemplate** tự động cấu hình tạo khởi tạo trong quá trình startup. Ta có thể autowired các lớp này nếu ta muốn dùng chúng , ví dụ
+
+```java
+@Autowired  
+JdbcTemplate jdbcTemplate;  
+@Autowired  
+private NamedParameterJdbcTemplate jdbcTemplate;  
+```
+
+Trong **application.properties** file, ta cấu hình **DataSource** và **connection pooling**. SB chọn **tomcat** pooling mặc định
+
+#### JDBC connection pooling
+**JDBC connection pooling** là một cơ chế quản lý nhiều yêu cầu kết nối CSDL. Có nghĩa là, nó tạo điều kiện tái sử dụng các connection,  một bộ nhớ cache của các kết nối CSDL, được gọi là một **connection pool**. Một modun connection pooling duy trì nó như tầng trên của bất kỳ sản phẩm JDBC driver tiêu chuẩn nào
+![spring-boot-jdbc](img/springboot-jdbc.png)
+
+Nó tăng tốc độ truy nhập dữ liệu và giảm số lượng kết nối database cho một ứng dụng. Nó cũng cải thiện hiệu suất của một ứng dụng. Connection pool thực hiện các nhiệm vụ sau:
+* Quản lý các kết nối có sẵn
+* Cấp phát kết nối mới
+* Đóng kết nối
+
+![spring-boot-jdbc2](img/springboot-jdbc2.png)
+
+Trong hình trên, có các **clients, một connection pool** (có 4 kết nối có sẵn) và 1 **DataSource**.
+Trong hình đàu tiên, 3 cliens kết nối với các connection khác nhau, và một connection có sẵn. Trong hình, Client 3 mất kết nối, và kết nối này có sẵn.
+Khi một client hoàn thành công việc, nó thể connection, và connection có sẵn cho client khác
+
+#### HikariCP
+Mặc định của connecton pool trong Spring Boot 3 (và 2) là **HikariCP**. Nó cũng cấp các tính năng sẵn sàng cho doanh nghiệp và hiệu suất tốt hơn. HikariCP là một triển khai JDBC DataSource  cung cấp cơ chế connection pool
+* Nếu Hikary ở trong classpath, SB sẽ tự động cấu hình nó
+* Nếu Hikary không trong classpath, SB sẽ tìm **Tomcat JDBC Connectio Pool**. Nếu nó trong classpath thì sẽ lấy nó
+* Nếu cả 2 trường hợp không khả dụng, SB sử dụng **Apache Commons DBCP2** như JDBC connection pool.
+
+Ta có thể cấu hình một connection pool thủ công. Để làm điều này, ta bỏ **Hikary** dependency (sử dụng `<exclusion>`) và thêm **tomcat-jdbc** dependency trong pom.xml file
+
+Cách tiếp cận này cho phép chúng ta sử dụng Tomcat Connection pool mà không cần viết một **@Configuration** class và định nghĩa **DataSource** Bean bằng lập trình.
+
+Mặt khác, Ta có thể bỏ thuật toán scanning connection pool mà SB sử dụng. Ta có thể chỉ định rõ ràng nguồn dữ liệu bằng cách thêm thuộc tính **spring.datasource.type**
+
+```java
+Spring.datasource.type=org.apache.tomcat.jdbc.pool.DataSource  
+```
+
+Ta có thể thiết lập Tomcat connection để phù hợp
+```java
+spring.datasource.tomcat.initial-size=20  
+spring.datasource.tomcat.max-wait=25000  
+spring.datasource.tomcat.max-active=70  
+spring.datasource.tomcat.max-idle=20  
+spring.datasource.tomcat.min-idle=9  
+spring.datasource.tomcat.default-auto-commit=true  
+```
+
+Nếu muốn sử dụng MySQL, ta thêm
+```xml
+<!-- MySQL JDBC driver -->  
+<dependency>  
+<groupId>mysql</groupId>  
+<artifactId>mysql-connector-java</artifactId>  
+</dependency>   
+```
+và định nghĩa datasource:
+```java
+spring.datasource.url=jdbc:mysql://192.168.1.4:3306/test  
+spring.datasource.username=javatpoint  
+spring.datasource.password=password  
+```
+
+#### Tại sao nên dùng SB JDBC
+SB JDBC và Spring JDBC khá giống nhau trừ cách triển khai. Các lợi ích của SB JDBC hơn Spring JDBC là.
+
+|Spring Boot JDBC | Spring JDBC |
+| :-------------- | :---------- |
+| Chỉ cần **spring-boot-starter-jdbc** | Cần cấu hình trong **spring-jdbc** và **spring-context** |
+| Cấu hình tự động Datasource Bean, nếu không duy trì rõ ràng, nếu ko muốn dùng bean, ta cài thuộc tính **spring.datasource **spring.datasource.initialze** to **false**|Cần tạo DB Bean bằng sử dụng **XML hoặc javaconfig** |
+| không cần đăng ký Bean template vì SB tự động đăng ký bean| Các template beans cần đưuọc đăng ký |
+|Bất kỳ khởi tạo csdl nào được lưu trong .sql file đều được chạy tự động | Nếu có bất cứ đoạn mã nào để xóa hoặc tạo trong sql file thì cần chỉ ra rõ ràng trong configuration |
+
+#### JDBC và Hibernate
+
+| JDBC | Hibernate |
+| :--- | :------- |
+| Là một công nghệ | Là một framework ORM|
+| Người dụng chịu trách nhiệm tạo và đóng kết nối | Hệ thống thực thi đảm nhiệm tạo và đóng kết nối |
+| Không hỗ trợ lazy loading | Hỗ trợ lazy loading , tăng hiện suất |
+| Không hỗ trợ liên kết (kết nối giữa 2 class khác nhau ) | Hỗ trợ kết nối |
 
 ### SB JDBC Example
 
