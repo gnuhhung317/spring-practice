@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en"
+xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Link Expression demo</title>
+</head>
+<body>
+<h1> Link Expression Demo:</h1>
+<a th:href="@{/variable-expression}"> Variable Expression </a>
+<a th:href="@{/selection-expression/{id}(id=${id})}"> Selection Expression</a>
+</body>
+</html>

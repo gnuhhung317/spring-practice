@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"
+xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Switch Case</title>
+</head>
+<body>
+<h1>Switch Case Demo</h1>
+<h3 th:text="${name}"></h3>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+    </tr>
+
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:switch="${user.gender}">
+            <span th:case="female">Ms.</span>
+            <span th:case="male">Mr.</span>
+            <span th:case="*">Unknown</span>
+        </td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.email}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

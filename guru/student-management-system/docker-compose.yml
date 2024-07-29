@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  student-management-system:
+    container_name: student-management-system
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - springboot-net
+    restart: on-failure
+
+networks:
+  springboot-net:
+    driver: bridge

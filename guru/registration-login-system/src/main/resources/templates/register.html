@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en"
+xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register and Login System</title>    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" th:href="@{/}">Registration and Login System</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/login}">Login</a>
+            </li>
+        </ul>
+
+    </div>
+</nav>
+<br> <br> <br>
+<div class="container">
+    <div class="row col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Registration</h2>
+            </div>
+            <div th:if="${param.success}" class="alert alert-success">Registration Successfully</div>
+            <div class="card-body">
+                <form th:action="@{/register/save}"
+                role="form"
+                method="post"
+                th:object="${user}">
+                    <div class="form-group mb-3">
+                        <label  class="form-label">First Name</label>
+                        <input class="form-control"  type="text" id="firstName" name="firstName" placeholder="Enter First Name" th:field="*{firstName}">
+
+                        <p th:errors="*{firstName}" class="text-danger" th:if="${#fields.hasErrors('firstName')}"></p>
+                    </div>
+                    <div class="form-group mb-s3">
+
+                        <label  class="form-label">Last Name</label>
+                        <input class="form-control" type="text" id="lastName" name="lastName" placeholder="Enter Last Name" th:field="*{lastName}">
+                        <p th:errors="*{lastName}" class="text-danger" th:if="${#fields.hasErrors('lastName')}"></p>
+
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label  class="form-label">Email</label>
+                        <input class="form-control" type="email" id="email" name="email" placeholder="Enter Email" th:field="*{email}">
+                        <p th:errors="*{email}" class="text-danger" th:if="${#fields.hasErrors('email')}"></p>
+
+                    </div>
+                    <div class="form-group mb-3">
+                        <label  class="form-label">Password</label>
+                        <input class="form-control" type="password" id="password" name="password" placeholder="Enter Password" th:field="*{password}">
+                        <p th:errors="*{password}" class="text-danger" th:if="${#fields.hasErrors('password')}"></p>
+
+                    </div>
+                    <div class="form-group mb-3">
+                        <button class="btn btn-success" type="submit">Register</button>
+                        <span>Already registered? <a th:href="@{/login}">Login here</a></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

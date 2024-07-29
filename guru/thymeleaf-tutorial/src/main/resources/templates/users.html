@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en"
+xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>SR. No</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Gender</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user, userStat : ${users}">
+        <th th:text="${userStat.count}"></th>
+        <th th:text="${user.name}"></th>
+        <th th:text="${user.email}"></th>
+        <th th:text="${user.role}"></th>
+        <th th:text="${user.gender}"></th>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
